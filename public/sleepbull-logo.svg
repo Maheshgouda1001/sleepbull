@@ -1,0 +1,6 @@
+<svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="48" height="48" rx="12" fill="#1F6F78"/>
+  <path d="M13 28C13 21.3726 18.3726 16 25 16H35C35 22.6274 29.6274 28 23 28H13Z" fill="#F4A261"/>
+  <path d="M13 32H28C34.0751 32 39 27.0751 39 21V20" stroke="#F8F5F0" stroke-width="3" stroke-linecap="round"/>
+  <text x="60" y="30" fill="#1D2A33" font-size="24" font-family="Georgia, serif" font-weight="700">Sleepbull</text>
+</svg>

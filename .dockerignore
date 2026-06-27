@@ -1,0 +1,59 @@
+node_modules
+frontend/node_modules
+frontend/.next
+dist
+.git
+.env
+coverage
+uploads
+
+# Dependencies
+sleepbull-frontend/node_modules
+sleepbull-frontend/.pnp
+sleepbull-frontend.pnp.js
+
+# Next.js Build and Cache
+sleepbull-frontend/.next/
+sleepbull-frontend/out/
+
+# Production Build Artifacts
+sleepbull-frontend/build
+
+# Debug logs
+sleepbull-frontendnpm-debug.log*
+sleepbull-frontendyarn-debug.log*
+sleepbull-frontendyarn-error.log*
+sleepbull-frontendpnpm-debug.log*
+
+# Local Environment Variables
+sleepbull-frontend/.env*.local
+sleepbull-frontend/.env
+sleepbull-frontend/.env.local
+sleepbull-frontend/.env.development.local
+sleepbull-frontend/.env.test.local
+sleepbull-frontend/.env.production.local
+
+# Vercel deployment tracking
+sleepbull-frontend/.vercel
+
+# TypeScript build info
+sleepbull-frontend/*.tsbuildinfo
+sleepbull-frontend/next-env.d.ts
+
+# Testing coverage
+sleepbull-frontend//coverage
+
+# IDEs and Editors
+sleepbull-frontend/.vscode/
+sleepbull-frontend/.idea/
+sleepbull-frontend/*.suo
+sleepbull-frontend/*.ntvs*
+sleepbull-frontend/*.njsproj
+sleepbull-frontend/*.sln
+sleepbull-frontend/*.sw?
+
+# Operating System Files
+sleepbull-frontend/.DS_Store
+sleepbull-frontend/Thumbs.db
+
+sleepbull/.next

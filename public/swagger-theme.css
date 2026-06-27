@@ -1,0 +1,71 @@
+:root {
+  --sleepbull-primary: #1f6f78;
+  --sleepbull-accent: #f4a261;
+  --sleepbull-surface: #f8f5f0;
+  --sleepbull-surface-strong: #fffaf2;
+  --sleepbull-ink: #1d2a33;
+  --sleepbull-muted: #5f6d76;
+  --sleepbull-line: #d7d1c7;
+}
+
+body,
+.swagger-ui {
+  background:
+    radial-gradient(circle at top left, rgba(244, 162, 97, 0.18), transparent 26%),
+    radial-gradient(circle at top right, rgba(31, 111, 120, 0.16), transparent 28%),
+    linear-gradient(180deg, #fffdf8 0%, var(--sleepbull-surface) 100%);
+  color: var(--sleepbull-ink);
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.swagger-ui .topbar {
+  background: linear-gradient(90deg, var(--sleepbull-ink), var(--sleepbull-primary));
+  border-bottom: 3px solid var(--sleepbull-accent);
+}
+
+.swagger-ui .topbar-wrapper img {
+  content: url('/public/sleepbull-logo.svg');
+  height: 38px;
+}
+
+.swagger-ui .info .title,
+.swagger-ui .opblock-tag,
+.swagger-ui .scheme-container .wrapper label {
+  color: var(--sleepbull-ink);
+}
+
+.swagger-ui .opblock.opblock-get {
+  border-color: var(--sleepbull-primary);
+  background: rgba(31, 111, 120, 0.05);
+}
+
+.swagger-ui .opblock.opblock-post,
+.swagger-ui .opblock.opblock-put,
+.swagger-ui .opblock.opblock-delete {
+  border-color: var(--sleepbull-accent);
+  background: rgba(244, 162, 97, 0.08);
+}
+
+.swagger-ui .btn.authorize,
+.swagger-ui .btn.execute,
+.swagger-ui .btn.cancel {
+  border-radius: 6px;
+}
+
+.swagger-ui .btn.execute {
+  background: var(--sleepbull-primary);
+  border-color: var(--sleepbull-primary);
+}
+
+.swagger-ui .btn.authorize {
+  color: var(--sleepbull-primary);
+  border-color: var(--sleepbull-primary);
+}
+
+.swagger-ui .scheme-container,
+.swagger-ui .opblock,
+.swagger-ui .responses-inner,
+.swagger-ui .model-box {
+  box-shadow: none;
+  border-radius: 8px;
+}
