@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const BACKEND_ORIGIN =
   process.env.BACKEND_URL ??
   process.env.NEXT_PUBLIC_API_BASE ??
-  "http://localhost:4000";
+  "http://13.55.55.13:4000";
 
 async function proxyRequest(
   request: NextRequest,

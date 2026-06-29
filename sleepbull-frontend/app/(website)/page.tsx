@@ -32,7 +32,7 @@ export default async function HomePage() {
         <div className="bg-amber-50 px-4 py-3 text-center text-sm text-amber-900">
           Could not load data from the backend. Make sure{" "}
           <code className="rounded bg-amber-100 px-1">
-            http://localhost:4000
+            http://13.55.55.13:4000
           </code>{" "}
           is running, then refresh this page.
         </div>

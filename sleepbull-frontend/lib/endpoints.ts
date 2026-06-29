@@ -42,12 +42,12 @@ export const ENDPOINTS = {
 } as const;
 
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
+  process.env.NEXT_PUBLIC_API_URL ?? "http://13.55.55.13:4000/api";
 
 export const API_ORIGIN =
-  process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:4000";
+  process.env.NEXT_PUBLIC_API_BASE ?? "http://13.55.55.13:4000";
 
 export const HEALTH_URL =
   process.env.NEXT_PUBLIC_API_BASE
     ? `${process.env.NEXT_PUBLIC_API_BASE}/health`
-    : "http://localhost:4000/health";
+    : "http://13.55.55.13:4000/health";

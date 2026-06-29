@@ -3,7 +3,7 @@ import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
 
 const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:4000";
+  process.env.NEXT_PUBLIC_API_BASE ?? "http://13.55.55.13:4000";
 
 function toNumber(value: ApiNumber | null | undefined): number {
   if (value === null || value === undefined) return 0;

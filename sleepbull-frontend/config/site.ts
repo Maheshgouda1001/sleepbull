@@ -33,7 +33,7 @@ export const siteConfig = {
   
     baseApiUrl:
       process.env.NEXT_PUBLIC_API_URL ??
-      "http://localhost:4000/api",
+      "http://13.55.55.13:4000/api",
   
     // ==========================================
     // Contact

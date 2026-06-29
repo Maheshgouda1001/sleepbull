@@ -1,19 +1,19 @@
 import type { NextConfig } from "next";
 
-const apiBase = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:4000";
+const apiBase = process.env.NEXT_PUBLIC_API_BASE ?? "http://13.55.55.13:4000";
 
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "localhost",
+        hostname: "13.55.55.13",
         port: "4000",
         pathname: "/uploads/**",
       },
       {
         protocol: "http",
-        hostname: "localhost",
+        hostname: "13.55.55.13",
         port: "4000",
         pathname: "/public/**",
       },
