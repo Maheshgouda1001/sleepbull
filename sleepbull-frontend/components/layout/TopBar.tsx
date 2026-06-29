@@ -1,20 +1,29 @@
+import { Mail, Phone, Truck } from "lucide-react";
+
 import Container from "./Container";
 
 export default function TopBar() {
   return (
-    <div className="hidden bg-slate-900 py-2 text-sm text-white lg:block">
+    <div className="hidden bg-primary py-1.5 text-xs font-medium text-text-white/90 lg:block">
       <Container>
         <div className="flex items-center justify-between">
 
-          <p>
-            🚚 Free Shipping Across India
+          <p className="flex items-center gap-2">
+            <Truck size={14} />
+            Free shipping across India
           </p>
 
-          <div className="flex gap-6">
+          <div className="flex gap-5">
 
-            <span>📞 +91 9876543210</span>
+            <span className="flex items-center gap-2">
+              <Phone size={13} />
+              +91 9876543210
+            </span>
 
-            <span>✉ support@sleepbull.com</span>
+            <span className="flex items-center gap-2">
+              <Mail size={13} />
+              support@sleepbull.com
+            </span>
 
           </div>
 

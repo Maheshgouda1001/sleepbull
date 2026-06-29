@@ -1,24 +1,59 @@
-import type { ApiCategory, ApiProduct } from "./api-types";
+import type { ApiCategory, ApiNumber, ApiProduct } from "./api-types";
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:4000";
 
-function toNumber(value: string | number | null | undefined): number {
+function toNumber(value: ApiNumber | null | undefined): number {
   if (value === null || value === undefined) return 0;
-  return typeof value === "number" ? value : Number(value);
+  if (typeof value === "number") return value;
+  if (typeof value === "string") return Number(value);
+
+  if (Array.isArray(value.d) && value.d.length > 0) {
+    const digits = value.d.join("");
+    const exponent = value.e ?? digits.length - 1;
+    const sign = value.s === -1 ? -1 : 1;
+    return sign * Number(`${digits[0]}.${digits.slice(1) || "0"}e${exponent}`);
+  }
+
+  return 0;
 }
 
 export function resolveAssetUrl(path?: string | null): string {
   if (!path) return "/images/placeholder.svg";
   if (path.startsWith("http://") || path.startsWith("https://")) return path;
-  return `${API_BASE}${path.startsWith("/") ? path : `/${path}`}`;
+
+  const normalized = path.replace(/^\/+/, "");
+
+  if (normalized.startsWith("uploads/")) {
+    return `/api/assets/${normalized}`;
+  }
+
+  if (normalized.startsWith("public/")) {
+    return `/api/assets/${normalized}`;
+  }
+
+  if (normalized.startsWith("images/products/")) {
+    return `/api/assets/public/${normalized}`;
+  }
+
+  if (normalized.startsWith("images/")) {
+    const [, folderOrFile, ...rest] = normalized.split("/");
+    const imagePath =
+      rest.length > 0
+        ? normalized
+        : `images/products/${folderOrFile}`;
+
+    return `/api/assets/public/${imagePath}`;
+  }
+
+  return `/api/assets/${normalized}`;
 }
 
 export function mapCategory(category: ApiCategory): Category {
   return {
-    id: category.id,
+    id: String(category.id),
     name: category.name,
     slug: category.slug,
     description: category.description ?? undefined,
@@ -63,7 +98,7 @@ export function mapProduct(product: ApiProduct): Product {
       : 0;
 
   return {
-    id: product.id,
+    id: String(product.id),
     name: product.name,
     slug: product.slug,
     sku: primaryVariant?.sku ?? product.slug,
@@ -81,8 +116,8 @@ export function mapProduct(product: ApiProduct): Product {
     size: primaryVariant?.size ?? "",
     warranty: specValue(product.specifications, "Warranty"),
     images: product.images.map((image) => ({
-      id: image.id,
-      image: resolveAssetUrl(image.path),
+      id: String(image.id),
+      image: resolveAssetUrl(image.imagePath ?? image.path),
       alt: image.altText ?? undefined,
       sortOrder: image.sortOrder,
     })),
@@ -92,7 +127,7 @@ export function mapProduct(product: ApiProduct): Product {
     })),
     reviews: [],
     isFeatured: product.isFeatured,
-    isBestSeller: product.isFeatured,
+    isBestSeller: product.isBestSeller,
     isActive: product.isActive,
     createdAt: product.createdAt,
     updatedAt: product.updatedAt,

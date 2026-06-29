@@ -46,7 +46,7 @@ export function createProductRouter(controller: ProductController) {
     '/:productId/variants',
     authenticate,
     authorize(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.EDITOR),
-    validate({ body: variantBodySchema, params: zUuidParam('productId') }),
+    validate({ body: variantBodySchema, params: zBigIntParam('productId') }),
     asyncHandler(controller.createVariant)
   );
   router.put(
@@ -68,7 +68,7 @@ export function createProductRouter(controller: ProductController) {
     '/:productId/images',
     authenticate,
     authorize(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.EDITOR),
-    validate({ params: zUuidParam('productId') }),
+    validate({ params: zBigIntParam('productId') }),
     upload.single('image'),
     asyncHandler(controller.uploadImage)
   );
@@ -83,13 +83,13 @@ export function createProductRouter(controller: ProductController) {
     '/:productId/images/reorder',
     authenticate,
     authorize(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.EDITOR),
-    validate({ params: zUuidParam('productId'), body: imageReorderSchema }),
+    validate({ params: zBigIntParam('productId'), body: imageReorderSchema }),
     asyncHandler(controller.reorderImages)
   );
 
   return router;
 }
 
-function zUuidParam(key: string) {
-  return z.object({ [key]: z.string().uuid() });
+function zBigIntParam(key: string) {
+  return z.object({ [key]: z.coerce.bigint().or(z.string().regex(/^\d+$/).transform(BigInt)) });
 }

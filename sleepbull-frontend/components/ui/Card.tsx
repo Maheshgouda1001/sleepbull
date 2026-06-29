@@ -9,7 +9,7 @@ interface Props {
   }: Props) {
     return (
       <div
-        className={`rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:shadow-xl ${className}`}
+        className={`rounded-3xl border border-border bg-background shadow-sm transition hover:shadow-xl ${className}`}
       >
         {children}
       </div>

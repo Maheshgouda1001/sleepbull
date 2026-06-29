@@ -15,19 +15,19 @@ export default function ProductRating({
       <div className="flex items-center">
 
         <Star
-          className="fill-yellow-400 text-yellow-400"
-          size={16}
+          className="fill-secondary text-secondary"
+          size={14}
         />
 
       </div>
 
-      <span className="font-medium">
+      <span className="text-sm font-semibold">
 
         {rating.toFixed(1)}
 
       </span>
 
-      <span className="text-slate-500">
+      <span className="text-xs text-text-light">
 
         ({reviewCount})
 

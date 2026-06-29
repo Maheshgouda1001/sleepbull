@@ -12,18 +12,27 @@ export interface ApiCategory {
 
 export interface ApiProductImage {
   id: string;
-  path: string;
+  imagePath: string;
+  path?: string;
   altText?: string | null;
   sortOrder: number;
 }
+
+export interface ApiDecimal {
+  s?: number;
+  e?: number;
+  d?: number[];
+}
+
+export type ApiNumber = string | number | ApiDecimal;
 
 export interface ApiProductVariant {
   id: string;
   sku: string;
   size: string;
   firmness?: string | null;
-  price: string | number;
-  compareAtPrice?: string | number | null;
+  price: ApiNumber;
+  compareAtPrice?: ApiNumber | null;
   stock: number;
   isActive: boolean;
 }
@@ -41,9 +50,10 @@ export interface ApiProduct {
   slug: string;
   shortDescription?: string | null;
   description?: string | null;
-  basePrice: string | number;
-  compareAtPrice?: string | number | null;
+  basePrice: ApiNumber;
+  compareAtPrice?: ApiNumber | null;
   isFeatured: boolean;
+  isBestSeller: boolean;
   isActive: boolean;
   category: ApiCategory;
   images: ApiProductImage[];
@@ -74,8 +84,6 @@ export interface ApiFaq {
   category?: string | null;
   isActive: boolean;
   sortOrder: number;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface ApiBlog {
@@ -98,8 +106,4 @@ export interface ApiTestimonial {
   quote: string;
   rating: number;
   imagePath?: string | null;
-  isActive: boolean;
-  sortOrder: number;
-  createdAt: string;
-  updatedAt: string;
 }

@@ -10,22 +10,22 @@ interface ProductBadgeProps {
     discount,
   }: ProductBadgeProps) {
     return (
-      <div className="absolute left-4 top-4 flex flex-col gap-2">
+      <div className="absolute left-3 top-3 z-10 flex flex-col gap-1.5">
   
-        {discount && discount > 0 && (
-          <span className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white">
+        {Boolean(discount && discount > 0) && (
+          <span className="rounded-full bg-red-600 px-2.5 py-1 text-[10px] font-bold text-white">
             {discount}% OFF
           </span>
         )}
   
         {isFeatured && (
-          <span className="rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
+          <span className="rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold text-white">
             Featured
           </span>
         )}
   
         {isBestSeller && (
-          <span className="rounded-full bg-amber-500 px-3 py-1 text-xs font-semibold text-white">
+          <span className="rounded-full bg-secondary px-2.5 py-1 text-[10px] font-bold text-text-white">
             Best Seller
           </span>
         )}

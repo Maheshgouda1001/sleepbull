@@ -14,7 +14,7 @@ export interface Testimonial {
 
 function mapTestimonial(item: ApiTestimonial): Testimonial {
   return {
-    id: item.id,
+    id: String(item.id),
     name: item.name,
     role: item.role ?? undefined,
     quote: item.quote,
@@ -34,8 +34,5 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     }
   );
 
-  return response.items
-    .filter((item) => item.isActive)
-    .sort((a, b) => a.sortOrder - b.sortOrder)
-    .map(mapTestimonial);
+  return response.items.map(mapTestimonial);
 }

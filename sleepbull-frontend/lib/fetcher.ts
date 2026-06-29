@@ -24,7 +24,7 @@ async function parseResponse<T>(response: Response): Promise<T> {
 /** GET from Node backend at localhost:4000/api */
 export async function fetcher<T>(path: string): Promise<T> {
   const url = buildBackendUrl(path);
-
+  console.log(`[SleepBull API] GET ${url}`);
   const response = await fetch(url, {
     method: "GET",
     cache: "no-store",

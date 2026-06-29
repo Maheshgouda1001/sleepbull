@@ -3,15 +3,15 @@ import HeroStats from "./HeroStats";
 
 export default function HeroContent() {
   return (
-    <div>
+    <div className="max-w-2xl lg:pl-2">
 
-      <span className="inline-flex rounded-full bg-amber-100 px-5 py-2 text-sm font-semibold text-amber-700">
+      <span className="inline-flex max-w-full rounded-full bg-secondary px-3.5 py-2 text-[11px] font-bold uppercase tracking-[1.8px] text-text-white sm:px-4">
 
         India's Premium Sleep Brand
 
       </span>
 
-      <h1 className="mt-8 text-5xl font-bold leading-tight text-slate-900 lg:text-7xl">
+      <h1 className="mt-5 text-4xl font-bold leading-[1.05] text-text-primary sm:text-5xl xl:text-6xl">
 
         Sleep Better.
 
@@ -21,7 +21,7 @@ export default function HeroContent() {
 
       </h1>
 
-      <p className="mt-8 max-w-xl text-lg leading-8 text-slate-600">
+      <p className="mt-5 max-w-xl text-base leading-7 text-text-secondary sm:text-lg">
 
         Experience luxurious comfort with premium orthopedic
         mattresses designed to improve posture,

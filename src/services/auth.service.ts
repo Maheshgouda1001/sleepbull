@@ -1,6 +1,7 @@
 import createHttpError from 'http-errors';
 import { UserRole } from '@prisma/client';
 import { UserRepository } from '../repositories/user.repository';
+import { parseBigIntId } from '../utils/id';
 import { comparePassword, hashPassword } from '../utils/password';
 import { signAccessToken } from '../utils/jwt';
 
@@ -38,7 +39,10 @@ export class AuthService {
   }
 
   async getProfile(userId: string) {
-    const user = (await this.userRepository.findUnique({ id: userId, deletedAt: null })) as any;
+    const user = (await this.userRepository.findUnique({
+      id: parseBigIntId(userId),
+      deletedAt: null
+    })) as any;
     if (!user) {
       throw createHttpError(404, 'User not found');
     }
@@ -55,7 +59,10 @@ export class AuthService {
   }
 
   async changePassword(userId: string, currentPassword: string, newPassword: string) {
-    const user = (await this.userRepository.findUnique({ id: userId, deletedAt: null })) as any;
+    const user = (await this.userRepository.findUnique({
+      id: parseBigIntId(userId),
+      deletedAt: null
+    })) as any;
     if (!user) {
       throw createHttpError(404, 'User not found');
     }

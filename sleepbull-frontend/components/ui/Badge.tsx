@@ -13,7 +13,7 @@ interface BadgeProps {
   }: BadgeProps) {
     const colors = {
       primary:
-        "bg-slate-900 text-white",
+        "bg-primary text-text-white",
   
       success:
         "bg-green-600 text-white",

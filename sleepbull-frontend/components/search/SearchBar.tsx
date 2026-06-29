@@ -21,11 +21,11 @@ export default function SearchBar() {
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         placeholder="Search mattresses..."
-        className="w-56 rounded-full border border-slate-200 bg-slate-50 py-2 pl-4 pr-10 text-sm outline-none transition focus:border-slate-400 lg:w-72"
+        className="w-56 rounded-full border border-border bg-section py-2 pl-4 pr-10 text-sm text-text-primary outline-none transition placeholder:text-text-light focus:border-primary lg:w-72"
       />
       <button
         type="submit"
-        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500"
+        className="absolute right-3 top-1/2 -translate-y-1/2 text-text-light"
         aria-label="Search"
       >
         <Search size={18} />

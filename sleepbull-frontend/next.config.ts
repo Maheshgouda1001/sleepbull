@@ -12,9 +12,20 @@ const nextConfig: NextConfig = {
         pathname: "/uploads/**",
       },
       {
+        protocol: "http",
+        hostname: "localhost",
+        port: "4000",
+        pathname: "/public/**",
+      },
+      {
         protocol: "https",
         hostname: new URL(apiBase).hostname,
         pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: new URL(apiBase).hostname,
+        pathname: "/public/**",
       },
     ],
   },

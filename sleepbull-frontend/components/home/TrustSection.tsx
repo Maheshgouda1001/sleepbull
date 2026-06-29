@@ -5,26 +5,26 @@ import { trustData } from "./trustData";
 
 export default function TrustSection() {
   return (
-    <section className="py-24">
+    <section className="py-12 sm:py-14 lg:py-16">
 
       <Container>
 
-        <div className="mx-auto mb-16 max-w-3xl text-center">
+        <div className="mx-auto mb-9 max-w-3xl text-center sm:mb-10">
 
-          <span className="text-sm font-semibold uppercase tracking-widest text-slate-500">
+          <span className="text-xs font-bold uppercase tracking-[3px] text-text-light">
 
             Why Choose SleepBull
 
           </span>
 
-          <h2 className="mt-4 text-4xl font-bold lg:text-5xl">
+          <h2 className="mx-auto mt-3 max-w-3xl text-3xl font-bold tracking-tight text-text-primary lg:text-4xl">
 
             Designed for Better Sleep,
             Built for Better Living.
 
           </h2>
 
-          <p className="mt-6 text-lg leading-8 text-slate-600">
+          <p className="mt-4 text-base leading-7 text-text-secondary">
 
             Every SleepBull mattress is engineered using premium
             materials, advanced sleep technology and expert craftsmanship
@@ -34,7 +34,7 @@ export default function TrustSection() {
 
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-4">
 
           {trustData.map((item) => (
             <TrustCard

@@ -1,6 +1,7 @@
 import createHttpError from 'http-errors';
 import { ProductImageRepository } from '../repositories/product-image.repository';
 import { ProductRepository } from '../repositories/product.repository';
+import { parseBigIntId } from '../utils/id';
 import type { StorageService } from '../storage/storage.interface';
 
 export class ProductImageService {
@@ -11,7 +12,10 @@ export class ProductImageService {
   ) {}
 
   async upload(productId: string, file: Express.Multer.File | undefined, altText?: string) {
-    const product = await this.productRepository.findUnique({ id: productId, deletedAt: null });
+    const product = await this.productRepository.findUnique({
+      id: parseBigIntId(productId),
+      deletedAt: null
+    });
     if (!product) {
       throw createHttpError(404, 'Product not found');
     }
@@ -27,23 +31,27 @@ export class ProductImageService {
       folder: 'products'
     });
 
-    const image = await this.repository.create({
-      productId,
-      path: stored.relativePath,
+    return this.repository.create({
+      productId: parseBigIntId(productId),
+      imagePath: stored.relativePath,
       altText,
       sortOrder: 999
     });
-
-    return image;
   }
 
   async remove(imageId: string) {
-    const image = (await this.repository.findUnique({ id: imageId, deletedAt: null })) as any;
+    const image = (await this.repository.findUnique({ id: parseBigIntId(imageId) })) as {
+      imagePath?: string;
+    } | null;
+
     if (!image) {
       throw createHttpError(404, 'Product image not found');
     }
 
-    await this.storageService.deleteFile(image.path);
-    return this.repository.update({ id: imageId }, { deletedAt: new Date() });
+    if (image.imagePath) {
+      await this.storageService.deleteFile(image.imagePath);
+    }
+
+    return this.repository.delete({ id: parseBigIntId(imageId) });
   }
 }

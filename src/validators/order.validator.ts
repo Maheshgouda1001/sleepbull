@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { OrderStatus, PaymentStatus } from '@prisma/client';
-import { paginationQuerySchema } from './common.validator';
+import { bigintIdSchema, paginationQuerySchema } from './common.validator';
 
 const addressSchema = z.object({
   line1: z.string().min(2),
@@ -12,8 +12,8 @@ const addressSchema = z.object({
 });
 
 const orderItemSchema = z.object({
-  productId: z.string().uuid(),
-  variantId: z.string().uuid().optional(),
+  productId: bigintIdSchema,
+  variantId: bigintIdSchema.optional(),
   quantity: z.number().int().positive()
 });
 

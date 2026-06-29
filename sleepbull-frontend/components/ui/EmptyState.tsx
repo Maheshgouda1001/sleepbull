@@ -17,7 +17,7 @@ interface Props {
         </h2>
   
         {description && (
-          <p className="mt-4 text-slate-500">
+          <p className="mt-4 text-text-light">
   
             {description}
   

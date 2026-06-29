@@ -14,21 +14,21 @@ export default function FeaturedProducts({
   products,
 }: Props) {
   return (
-    <section className="py-28 bg-slate-50">
+    <section className="bg-section py-12 sm:py-14 lg:py-16">
 
       <Container>
 
-        <div className="mb-14 flex items-end justify-between">
+        <div className="mb-8 flex items-end justify-between gap-4 sm:mb-9">
 
           <div>
 
-            <span className="font-semibold uppercase tracking-[4px] text-slate-500">
+            <span className="text-xs font-bold uppercase tracking-[3px] text-text-light">
 
               Featured Collection
 
             </span>
 
-            <h2 className="mt-4 text-5xl font-bold">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-text-primary lg:text-4xl">
 
               Best Selling Mattresses
 
@@ -38,7 +38,7 @@ export default function FeaturedProducts({
 
           <Link
             href="/categories/mattresses"
-            className="hidden lg:block font-medium hover:underline"
+            className="hidden text-sm font-semibold text-primary hover:text-primary-hover lg:block"
           >
             View All →
           </Link>

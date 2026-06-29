@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 import { CategoryRepository } from '../repositories/category.repository';
+import { parseBigIntId } from '../utils/id';
 import { toSlug } from '../utils/slug';
 
 export class CategoryService {
@@ -13,7 +14,10 @@ export class CategoryService {
   }
 
   async getById(id: string) {
-    const category = await this.repository.findUnique({ id, deletedAt: null });
+    const category = await this.repository.findUnique({
+      id: parseBigIntId(id),
+      deletedAt: null
+    });
     if (!category) {
       throw createHttpError(404, 'Category not found');
     }
@@ -30,7 +34,7 @@ export class CategoryService {
   async update(id: string, payload: Record<string, unknown>) {
     await this.getById(id);
     return this.repository.update(
-      { id },
+      { id: parseBigIntId(id) },
       {
         ...payload,
         ...(payload.name && !payload.slug ? { slug: toSlug(String(payload.name)) } : {})
@@ -40,6 +44,9 @@ export class CategoryService {
 
   async remove(id: string) {
     await this.getById(id);
-    return this.repository.update({ id }, { deletedAt: new Date(), isActive: false });
+    return this.repository.update(
+      { id: parseBigIntId(id) },
+      { deletedAt: new Date(), isActive: false }
+    );
   }
 }

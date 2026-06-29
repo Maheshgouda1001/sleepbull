@@ -20,7 +20,7 @@ interface Props {
         }`}
       >
         {subtitle && (
-          <p className="font-semibold uppercase tracking-[4px] text-slate-500">
+          <p className="font-semibold uppercase tracking-[4px] text-text-light">
             {subtitle}
           </p>
         )}
@@ -30,7 +30,7 @@ interface Props {
         </h2>
   
         {description && (
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-500">
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-text-light">
             {description}
           </p>
         )}

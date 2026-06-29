@@ -17,7 +17,7 @@ export default function WishlistButton({
     >
       <Heart
         size={18}
-        className="text-slate-700"
+        className="text-text-secondary"
       />
     </button>
   );

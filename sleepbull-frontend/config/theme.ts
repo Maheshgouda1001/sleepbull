@@ -1,12 +1,34 @@
+export const colors = {
+  primary: "#0D253D",
+  primaryHover: "#143A5A",
+
+  secondary: "#C89B3C",
+  secondaryHover: "#B48729",
+
+  background: "#FFFFFF",
+  section: "#F8FAFC",
+
+  text: {
+    primary: "#1F2937",
+    secondary: "#4B5563",
+    light: "#6B7280",
+    white: "#FFFFFF",
+  },
+
+  border: "#E5E7EB",
+} as const;
+
 export const theme = {
     // ===================================================
     // Brand
     // ===================================================
   
     brand: {
-      primary: "#0F172A",
-      secondary: "#F8FAFC",
-      accent: "#C8A96A",
+      primary: colors.primary,
+      primaryHover: colors.primaryHover,
+      secondary: colors.secondary,
+      secondaryHover: colors.secondaryHover,
+      accent: colors.secondary,
     },
   
     // ===================================================
@@ -14,10 +36,10 @@ export const theme = {
     // ===================================================
   
     background: {
-      body: "#FFFFFF",
-      section: "#F8FAFC",
-      card: "#FFFFFF",
-      dark: "#0F172A",
+      body: colors.background,
+      section: colors.section,
+      card: colors.background,
+      dark: colors.primary,
     },
   
     // ===================================================
@@ -25,11 +47,11 @@ export const theme = {
     // ===================================================
   
     text: {
-      primary: "#111827",
-      secondary: "#4B5563",
-      muted: "#6B7280",
-      white: "#FFFFFF",
-      light: "#9CA3AF",
+      primary: colors.text.primary,
+      secondary: colors.text.secondary,
+      muted: colors.text.light,
+      white: colors.text.white,
+      light: colors.text.light,
     },
   
     // ===================================================
@@ -37,9 +59,9 @@ export const theme = {
     // ===================================================
   
     border: {
-      light: "#E5E7EB",
-      DEFAULT: "#D1D5DB",
-      dark: "#CBD5E1",
+      light: colors.border,
+      DEFAULT: colors.border,
+      dark: colors.border,
     },
   
     // ===================================================
@@ -58,8 +80,8 @@ export const theme = {
     // ===================================================
   
     rating: {
-      active: "#FBBF24",
-      inactive: "#E5E7EB",
+      active: colors.secondary,
+      inactive: colors.border,
     },
   
     // ===================================================
@@ -69,7 +91,7 @@ export const theme = {
     badge: {
       sale: "#DC2626",
       new: "#16A34A",
-      bestseller: "#C8A96A",
+      bestseller: colors.secondary,
       limited: "#7C3AED",
     },
   
@@ -141,8 +163,8 @@ export const theme = {
     // ===================================================
   
     footer: {
-      background: "#111827",
-      color: "#FFFFFF",
+      background: colors.primary,
+      color: colors.text.white,
     },
   
     // ===================================================

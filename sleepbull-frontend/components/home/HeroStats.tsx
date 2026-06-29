@@ -1,14 +1,14 @@
 export default function HeroStats() {
     return (
-      <div className="mt-14 grid grid-cols-3 gap-8">
+      <div className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-border pt-5 sm:gap-6">
   
         <div>
   
-          <h3 className="text-3xl font-bold">
+          <h3 className="text-2xl font-bold text-primary">
             25K+
           </h3>
   
-          <p className="mt-2 text-slate-500">
+          <p className="mt-1 text-xs font-medium text-text-light sm:text-sm">
             Happy Customers
           </p>
   
@@ -16,11 +16,11 @@ export default function HeroStats() {
   
         <div>
   
-          <h3 className="text-3xl font-bold">
+          <h3 className="text-2xl font-bold text-primary">
             100
           </h3>
   
-          <p className="mt-2 text-slate-500">
+          <p className="mt-1 text-xs font-medium text-text-light sm:text-sm">
             Nights Trial
           </p>
   
@@ -28,11 +28,11 @@ export default function HeroStats() {
   
         <div>
   
-          <h3 className="text-3xl font-bold">
+          <h3 className="text-2xl font-bold text-primary">
             10
           </h3>
   
-          <p className="mt-2 text-slate-500">
+          <p className="mt-1 text-xs font-medium text-text-light sm:text-sm">
             Year Warranty
           </p>
   

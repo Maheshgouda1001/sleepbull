@@ -76,9 +76,17 @@ const productImageService = new ProductImageService(
   storageService
 );
 const orderService = new OrderService(orderRepository, productRepository, productVariantRepository);
-const blogService = new ContentService(blogRepository, { slug: true });
-const faqService = new ContentService(faqRepository);
-const testimonialService = new ContentService(testimonialRepository);
+const blogService = new ContentService(blogRepository, {
+  slug: true,
+  orderBy: { createdAt: 'desc' }
+});
+const faqService = new ContentService(faqRepository, {
+  activeField: 'isActive',
+  orderBy: { sortOrder: 'asc' }
+});
+const testimonialService = new ContentService(testimonialRepository, {
+  orderBy: { id: 'desc' }
+});
 const contactService = new ContactService(contactEnquiryRepository);
 const newsletterService = new NewsletterService(newsletterRepository);
 

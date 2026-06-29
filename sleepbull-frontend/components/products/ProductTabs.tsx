@@ -7,12 +7,12 @@ interface Props {
 
 export default function ProductTabs({ product }: Props) {
   return (
-    <section className="border-t bg-slate-50 py-16">
+    <section className="border-t border-border bg-section py-16">
       <Container>
         <div className="max-w-3xl">
           <h2 className="text-3xl font-bold">Product Details</h2>
 
-          <p className="mt-6 leading-8 text-slate-600">
+          <p className="mt-6 leading-8 text-text-secondary">
             {product.description || product.shortDescription}
           </p>
 
@@ -21,12 +21,12 @@ export default function ProductTabs({ product }: Props) {
               {product.specifications.map((spec) => (
                 <div
                   key={`${spec.title}-${spec.value}`}
-                  className="rounded-2xl border bg-white p-4"
+                  className="rounded-2xl border border-border bg-background p-4"
                 >
-                  <dt className="text-sm font-medium text-slate-500">
+                  <dt className="text-sm font-medium text-text-light">
                     {spec.title}
                   </dt>
-                  <dd className="mt-1 font-semibold text-slate-900">
+                  <dd className="mt-1 font-semibold text-text-primary">
                     {spec.value}
                   </dd>
                 </div>

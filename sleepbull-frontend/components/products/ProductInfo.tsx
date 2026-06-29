@@ -13,7 +13,7 @@ export default function ProductInfo({
   return (
     <div>
 
-      <p className="text-slate-500">
+      <p className="text-text-light">
 
         {product.category.name}
 
@@ -43,13 +43,13 @@ export default function ProductInfo({
 
       </div>
 
-      <p className="mt-8 leading-8 text-slate-600">
+      <p className="mt-8 leading-8 text-text-secondary">
 
         {product.shortDescription}
 
       </p>
 
-      <button className="mt-10 w-full rounded-xl bg-slate-900 py-4 font-semibold text-white">
+      <button className="mt-10 w-full rounded-xl bg-primary py-4 font-semibold text-text-white hover:bg-primary-hover">
 
         Add To Cart
 

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const idParamSchema = z.object({
-  id: z.string().uuid()
+  id: z.coerce.bigint().or(z.string().regex(/^\d+$/).transform(BigInt))
 });
 
 export const slugOrIdParamSchema = z.object({
@@ -15,3 +15,7 @@ export const paginationQuerySchema = z.object({
   sortBy: z.string().optional(),
   sortOrder: z.enum(['asc', 'desc']).optional()
 });
+
+export const bigintIdSchema = z.coerce.bigint().or(
+  z.string().regex(/^\d+$/).transform((value) => BigInt(value))
+);

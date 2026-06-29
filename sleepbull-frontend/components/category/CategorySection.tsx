@@ -1,5 +1,6 @@
-import Container from "@/components/layout/Container";
+import Link from "next/link";
 
+import Container from "@/components/layout/Container";
 import { Category } from "@/types/category";
 
 import CategoryGrid from "./CategoryGrid";
@@ -11,37 +12,44 @@ interface Props {
 export default function CategorySection({
   categories,
 }: Props) {
+  const featuredCategories = categories
+    .filter((category) => category.isActive)
+    .slice(0, 8);
+
   return (
-    <section className="py-28">
+    <section className="py-12 sm:py-14 lg:py-16">
 
       <Container>
 
-        <div className="mb-20 text-center">
+        <div className="mb-8 flex flex-col gap-4 sm:mb-9 md:flex-row md:items-end md:justify-between">
 
-          <span className="font-semibold uppercase tracking-[4px] text-slate-500">
+          <div className="max-w-3xl">
+            <span className="text-xs font-bold uppercase tracking-[3px] text-text-light">
+              Shop Collection
+            </span>
 
-            Shop Collection
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-text-primary lg:text-4xl">
+              Find Your Perfect Sleep
+            </h2>
 
-          </span>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-text-secondary">
+              Explore our thoughtfully designed sleep
+              products crafted for every comfort level,
+              sleeping style and lifestyle.
+            </p>
+          </div>
 
-          <h2 className="mt-5 text-5xl font-bold">
-
-            Find Your Perfect Sleep
-
-          </h2>
-
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-500">
-
-            Explore our thoughtfully designed sleep
-            products crafted for every comfort level,
-            sleeping style and lifestyle.
-
-          </p>
+          <Link
+            href="/categories"
+            className="text-sm font-semibold text-primary hover:text-primary-hover"
+          >
+            View all collections
+          </Link>
 
         </div>
 
         <CategoryGrid
-          categories={categories}
+          categories={featuredCategories}
         />
 
       </Container>

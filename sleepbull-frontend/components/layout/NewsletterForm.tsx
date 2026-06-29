@@ -35,22 +35,22 @@ export default function NewsletterForm() {
   return (
     <div>
       <h3 className="mb-3 font-semibold">Newsletter</h3>
-      <p className="mb-4 text-sm text-slate-300">
+      <p className="mb-4 text-sm text-text-white/75">
         Get sleep tips and exclusive offers.
       </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input
           name="email"
           type="email"
           required
           placeholder="Your email"
-          className="flex-1 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-white placeholder:text-slate-500"
+          className="flex-1 rounded-xl border border-text-white/20 bg-primary-hover px-4 py-3 text-text-white placeholder:text-text-white/45"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="rounded-xl bg-white px-5 py-3 font-medium text-slate-900 hover:bg-slate-100 disabled:opacity-60"
+          className="rounded-xl bg-secondary px-5 py-3 font-medium text-text-white hover:bg-secondary-hover disabled:opacity-60"
         >
           {status === "loading" ? "..." : "Subscribe"}
         </button>

@@ -5,11 +5,11 @@ import HeroImage from "./HeroImage";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white">
+    <section className="relative overflow-hidden bg-gradient-to-b from-section via-background to-background">
 
-      <Container>
+      <Container className="max-w-[1560px]">
 
-        <div className="grid min-h-[720px] items-center gap-16 lg:grid-cols-2">
+        <div className="grid items-center gap-10 py-10 sm:py-12 lg:grid-cols-[minmax(0,0.82fr)_minmax(520px,1fr)] lg:gap-14 xl:py-16">
 
           <HeroContent />
 

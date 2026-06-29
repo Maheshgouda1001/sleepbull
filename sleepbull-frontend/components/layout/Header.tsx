@@ -15,24 +15,24 @@ export default function Header() {
     <>
       <TopBar />
 
-      <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-xl">
         <Container>
-          <div className="flex h-20 items-center justify-between gap-6">
+          <div className="flex h-16 items-center justify-between gap-6">
             <Logo />
 
-            <nav className="hidden items-center gap-8 lg:flex">
+            <nav className="hidden items-center gap-7 lg:flex">
               {navigation.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-[15px] font-medium text-slate-700 transition hover:text-black"
+                  className="text-sm font-semibold text-text-secondary transition hover:text-primary"
                 >
                   {item.title}
                 </Link>
               ))}
             </nav>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <SearchBar />
 
               <Link href="/wishlist" aria-label="Wishlist">

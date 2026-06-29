@@ -37,7 +37,7 @@ export default function CategorySection() {
             Shop By Category
           </h2>
 
-          <p className="mt-4 text-slate-500">
+          <p className="mt-4 text-text-light">
             Everything you need for a better sleep.
           </p>
 
@@ -50,10 +50,10 @@ export default function CategorySection() {
             <Link
               key={category.slug}
               href={`/categories/${category.slug}`}
-              className="group rounded-3xl border bg-white p-8 transition hover:-translate-y-2 hover:shadow-2xl"
+              className="group rounded-3xl border border-border bg-background p-8 transition hover:-translate-y-2 hover:shadow-2xl"
             >
 
-              <div className="mb-8 h-48 rounded-2xl bg-slate-100" />
+              <div className="mb-8 h-48 rounded-2xl bg-section" />
 
               <h3 className="text-xl font-semibold">
                 {category.name}

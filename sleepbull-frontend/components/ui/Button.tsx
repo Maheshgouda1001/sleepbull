@@ -26,13 +26,13 @@ export default function Button({
     "inline-flex items-center justify-center rounded-xl font-medium transition-all duration-300",
 
     {
-      "bg-slate-900 text-white hover:bg-black":
+      "bg-primary text-text-white hover:bg-primary-hover":
         variant === "primary",
 
-      "bg-slate-100 text-slate-900 hover:bg-slate-200":
+      "bg-secondary text-text-white hover:bg-secondary-hover":
         variant === "secondary",
 
-      "border border-slate-300 hover:bg-slate-100":
+      "border border-border text-text-primary hover:bg-section":
         variant === "outline",
 
       "px-4 py-2 text-sm":

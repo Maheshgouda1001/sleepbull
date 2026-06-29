@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { paginationQuerySchema } from './common.validator';
+import { bigintIdSchema, paginationQuerySchema } from './common.validator';
 
 const specificationSchema = z.object({
   key: z.string().min(1),
@@ -18,7 +18,7 @@ const variantSchema = z.object({
 });
 
 export const productBodySchema = z.object({
-  categoryId: z.string().uuid(),
+  categoryId: bigintIdSchema,
   name: z.string().min(2).max(180),
   slug: z.string().min(2).max(200).optional(),
   shortDescription: z.string().max(500).optional(),
@@ -32,16 +32,16 @@ export const productBodySchema = z.object({
 });
 
 export const productQuerySchema = paginationQuerySchema.extend({
-  categoryId: z.string().uuid().optional(),
+  categoryId: bigintIdSchema.optional(),
   isActive: z
     .union([z.literal('true'), z.literal('false')])
     .optional()
 });
 
 export const variantBodySchema = variantSchema.extend({
-  productId: z.string().uuid().optional()
+  productId: bigintIdSchema.optional()
 });
 
 export const imageReorderSchema = z.object({
-  imageIds: z.array(z.string().uuid()).min(1)
+  imageIds: z.array(bigintIdSchema).min(1)
 });

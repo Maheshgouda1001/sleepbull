@@ -4,6 +4,7 @@ import { ProductRepository } from '../repositories/product.repository';
 import { ProductVariantRepository } from '../repositories/product-variant.repository';
 import { generateOrderNumber } from '../utils/order';
 import { getPagination } from '../utils/pagination';
+import { parseBigIntId } from '../utils/id';
 
 export class OrderService {
   constructor(
@@ -18,7 +19,6 @@ export class OrderService {
     const paymentStatus = query.paymentStatus ? String(query.paymentStatus) : undefined;
 
     const where = {
-      deletedAt: null,
       ...(status ? { status } : {}),
       ...(paymentStatus ? { paymentStatus } : {})
     };
@@ -46,7 +46,7 @@ export class OrderService {
   }
 
   async getById(id: string) {
-    const order = await this.repository.findUnique({ id, deletedAt: null }, { items: true });
+    const order = await this.repository.findUnique({ id: parseBigIntId(id) }, { items: true });
     if (!order) {
       throw createHttpError(404, 'Order not found');
     }
@@ -62,13 +62,19 @@ export class OrderService {
 
     const items = await Promise.all(
       orderPayload.items.map(async (item) => {
-        const product = await this.productRepository.findUnique({ id: item.productId, deletedAt: null });
+        const product = await this.productRepository.findUnique({
+          id: parseBigIntId(item.productId),
+          deletedAt: null
+        });
         if (!product) {
           throw createHttpError(404, `Product not found: ${item.productId}`);
         }
 
         const variant = item.variantId
-          ? ((await this.variantRepository.findUnique({ id: item.variantId, deletedAt: null })) as any)
+          ? ((await this.variantRepository.findUnique({
+              id: parseBigIntId(item.variantId),
+              isActive: true
+            })) as any)
           : null;
         const productRecord = product as any;
 
@@ -109,11 +115,11 @@ export class OrderService {
 
   async update(id: string, payload: Record<string, unknown>) {
     await this.getById(id);
-    return this.repository.update({ id }, payload, { items: true });
+    return this.repository.update({ id: parseBigIntId(id) }, payload, { items: true });
   }
 
   async remove(id: string) {
     await this.getById(id);
-    return this.repository.update({ id }, { deletedAt: new Date() });
+    return this.repository.delete({ id: parseBigIntId(id) });
   }
 }

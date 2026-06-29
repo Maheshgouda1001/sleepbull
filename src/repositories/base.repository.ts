@@ -31,4 +31,8 @@ export class BaseRepository<TCreate = Record<string, unknown>, TUpdate = Record<
   update(where: Record<string, unknown>, data: TUpdate, include?: Record<string, unknown>) {
     return this.delegate.update({ where, data, include });
   }
+
+  delete(where: Record<string, unknown>) {
+    return this.delegate.delete({ where });
+  }
 }

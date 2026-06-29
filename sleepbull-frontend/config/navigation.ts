@@ -48,30 +48,30 @@ export interface NavigationItem {
       href: "/categories/bed-frames",
     },
   
-    {
-      title: "Accessories",
-      href: "/categories/accessories",
-    },
+    // {
+    //   title: "Accessories",
+    //   href: "/categories/accessories",
+    // },
   
-    {
-      title: "Offers",
-      href: "/offers",
-    },
+    // {
+    //   title: "Offers",
+    //   href: "/offers",
+    // },
   
-    {
-      title: "Blogs",
-      href: "/blogs",
-    },
+    // {
+    //   title: "Blogs",
+    //   href: "/blogs",
+    // },
   
-    {
-      title: "About",
-      href: "/about",
-    },
+    // {
+    //   title: "About",
+    //   href: "/about",
+    // },
   
-    {
-      title: "Contact",
-      href: "/contact",
-    },
+    // {
+    //   title: "Contact",
+    //   href: "/contact",
+    // },
   ];
   
   export const footerNavigation = {

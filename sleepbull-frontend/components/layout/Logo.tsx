@@ -12,9 +12,10 @@ export default function Logo() {
       <Image
         src={siteConfig.logo}
         alt={siteConfig.name}
-        width={160}
-        height={42}
+        width={120}
+        height={35}
         priority
+        className="h-auto w-[120px]"
       />
     </Link>
   );

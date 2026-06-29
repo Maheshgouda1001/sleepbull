@@ -13,41 +13,41 @@ export default function TestimonialsSection({
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="bg-slate-50 py-28">
+    <section className="bg-section py-16">
       <Container>
-        <div className="mb-16 text-center">
-          <span className="text-sm font-semibold uppercase tracking-widest text-slate-500">
+        <div className="mb-10 text-center">
+          <span className="text-xs font-bold uppercase tracking-[3px] text-text-light">
             Customer Stories
           </span>
-          <h2 className="mt-4 text-4xl font-bold lg:text-5xl">
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-text-primary lg:text-4xl">
             Loved by Sleepers Across India
           </h2>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {testimonials.map((item) => (
             <article
               key={item.id}
-              className="rounded-3xl border border-slate-200 bg-white p-8"
+              className="rounded-2xl border border-border bg-background p-6"
             >
               <div className="mb-4 flex gap-1">
                 {Array.from({ length: item.rating }).map((_, index) => (
                   <Star
                     key={index}
                     size={16}
-                    className="fill-amber-400 text-amber-400"
+                    className="fill-secondary text-secondary"
                   />
                 ))}
               </div>
 
-              <p className="leading-8 text-slate-600">
+              <p className="text-sm leading-7 text-text-secondary">
                 &ldquo;{item.quote}&rdquo;
               </p>
 
               <div className="mt-6">
                 <p className="font-semibold">{item.name}</p>
                 {item.role && (
-                  <p className="text-sm text-slate-500">{item.role}</p>
+                  <p className="text-sm text-text-light">{item.role}</p>
                 )}
               </div>
             </article>
