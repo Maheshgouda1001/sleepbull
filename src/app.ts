@@ -100,7 +100,13 @@ const testimonialController = new ContentController(testimonialService, 'Testimo
 const publicController = new PublicController(contactService, newsletterService);
 
 app.use(requestLogger);
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: {
+      policy: 'cross-origin'
+    }
+  })
+);
 app.use(
   cors({
     origin: env.corsOrigins,
