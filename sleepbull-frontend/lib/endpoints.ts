@@ -4,6 +4,7 @@ export const ENDPOINTS = {
 
   // Auth
   LOGIN: "/auth/login",
+  GOOGLE_LOGIN: "/auth/google",
   LOGOUT: "/auth/logout",
   PROFILE: "/auth/profile",
   CHANGE_PASSWORD: "/auth/change-password",
@@ -11,6 +12,10 @@ export const ENDPOINTS = {
   // Categories
   CATEGORIES: "/categories",
   CATEGORY_BY_ID: (id: string) => `/categories/${id}`,
+
+  // Fabrics
+  FABRICS: "/fabrics",
+  FABRIC_BY_ID: (id: string) => `/fabrics/${id}`,
 
   // Products
   PRODUCTS: "/products",
@@ -30,6 +35,7 @@ export const ENDPOINTS = {
 
   // Orders (admin auth required)
   ORDERS: "/orders",
+  ORDER_CHECKOUT: "/orders/checkout",
   ORDER_BY_ID: (id: string) => `/orders/${id}`,
 
   // Public
@@ -42,12 +48,12 @@ export const ENDPOINTS = {
 } as const;
 
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://13.55.55.13:4000/api";
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
 
 export const API_ORIGIN =
-  process.env.NEXT_PUBLIC_API_BASE ?? "http://13.55.55.13:4000";
+  process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:4000";
 
 export const HEALTH_URL =
   process.env.NEXT_PUBLIC_API_BASE
     ? `${process.env.NEXT_PUBLIC_API_BASE}/health`
-    : "http://13.55.55.13:4000/health";
+    : "http://localhost:4000/health";

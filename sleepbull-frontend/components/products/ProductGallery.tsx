@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -29,7 +29,7 @@ export default function ProductGallery({
   );
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const activeImage = images[activeIndex];
+  const activeImage = images[Math.min(activeIndex, images.length - 1)];
   const shouldSkipOptimization = (src: string) =>
     src.startsWith("http://") ||
     src.startsWith("https://") ||
@@ -46,6 +46,10 @@ export default function ProductGallery({
       current === images.length - 1 ? 0 : current + 1
     );
   };
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [images]);
 
   return (
     <div className="grid gap-4 lg:grid-cols-[88px_minmax(0,1fr)]">

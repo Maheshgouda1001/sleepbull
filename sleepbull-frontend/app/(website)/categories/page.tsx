@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import CategorySection from "@/components/category/CategorySection";
+import CollectionCategorySection from "@/components/category/CollectionCategorySection";
 
 import { getCategories } from "@/services/category.service";
 
@@ -15,8 +15,16 @@ export default async function CategoriesPage() {
   const categories = await getCategories();
 
   return (
-    <CategorySection
-      categories={categories}
-    />
+    <>
+      <CollectionCategorySection
+        categories={categories}
+        collection="mattresses"
+      />
+
+      <CollectionCategorySection
+        categories={categories}
+        collection="pillows"
+      />
+    </>
   );
 }

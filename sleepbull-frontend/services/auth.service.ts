@@ -3,11 +3,18 @@ import { ENDPOINTS } from "@/lib/endpoints";
 import type {
   AuthUser,
   ChangePasswordPayload,
+  GoogleLoginPayload,
   LoginPayload,
 } from "@/types/auth";
 
 export async function login(payload: LoginPayload): Promise<AuthUser> {
   return poster<AuthUser>(ENDPOINTS.LOGIN, payload);
+}
+
+export async function googleLogin(
+  payload: GoogleLoginPayload
+): Promise<AuthUser> {
+  return poster<AuthUser>(ENDPOINTS.GOOGLE_LOGIN, payload);
 }
 
 export async function logout(): Promise<void> {

@@ -7,6 +7,41 @@ export interface ProductImage {
     sortOrder: number;
   }
 
+export interface ProductVariant {
+  id: string;
+  sku: string;
+  size: string;
+  firmness?: string;
+  lengthCm?: number;
+  widthCm?: number;
+  heightInch?: number;
+  price: number;
+  compareAtPrice?: number;
+  salePrice: number;
+  stock: number;
+  isDefault: boolean;
+}
+
+export interface ProductFabric {
+  id: string;
+  name: string;
+  slug: string;
+  thumbnail: string;
+  description?: string;
+}
+
+export interface ProductCoverImage extends ProductImage {
+  fabricId: string;
+  fabric: ProductFabric;
+  isDefault: boolean;
+}
+
+export interface ProductThumbnailImage extends ProductImage {
+  fabricId: string;
+  fabric: ProductFabric;
+  isDefault: boolean;
+}
+
 export interface ProductSpecification {
   title: string;
 
@@ -33,6 +68,14 @@ export interface Product {
   slug: string;
 
   sku: string;
+
+  variantId?: string;
+
+  fabricId?: string;
+
+  fabric?: string;
+
+  cartKey?: string;
 
   shortDescription: string;
 
@@ -61,6 +104,14 @@ export interface Product {
   warranty: string;
 
   images: ProductImage[];
+
+  variants: ProductVariant[];
+
+  fabrics: ProductFabric[];
+
+  coverImages: ProductCoverImage[];
+
+  thumbnailImages: ProductThumbnailImage[];
 
   specifications: ProductSpecification[];
 

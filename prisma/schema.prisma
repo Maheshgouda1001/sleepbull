@@ -8,6 +8,7 @@ datasource db {
 }
 
 enum UserRole {
+  CUSTOMER
   SUPER_ADMIN
   ADMIN
   EDITOR
@@ -30,16 +31,43 @@ enum PaymentStatus {
   REFUNDED
 }
 
+enum ReturnStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PICKUP_SCHEDULED
+  PICKED_UP
+  INSPECTED
+  REFUNDED
+  COMPLETED
+}
+
+enum ReturnCondition {
+  UNOPENED
+  OPENED
+  DAMAGED
+  DEFECTIVE
+  WRONG_ITEM
+}
+
+enum ProductImageType {
+  COVER
+  GALLERY
+  THUMBNAIL
+  ZOOM
+}
+
 model User {
   id           BigInt    @id @default(autoincrement())
   email        String    @unique
   name         String
-  passwordHash String
+  passwordHash String    @map("password_hash")
   role         UserRole  @default(EDITOR)
-  isActive     Boolean   @default(true)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  deletedAt    DateTime?
+  isActive     Boolean   @default(true) @map("is_active")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+  cart         Cart?
 
   @@index([role])
   @@map("users")
@@ -49,36 +77,36 @@ model Brand {
   id          BigInt    @id @default(autoincrement())
   name        String
   slug        String    @unique
-  logoPath    String?
+  logoPath    String?   @map("logo_path")
   description String?
-  isActive    Boolean   @default(true)
+  isActive    Boolean   @default(true) @map("is_active")
   products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   @@map("brands")
 }
 
 model Category {
-  id              BigInt        @id @default(autoincrement())
+  id BigInt @id @default(autoincrement())
 
-  categoryTypeId  BigInt
-  categoryType    CategoryType  @relation(fields: [categoryTypeId], references: [id])
+  categoryTypeId BigInt       @map("category_type_id")
+  categoryType   CategoryType @relation(fields: [categoryTypeId], references: [id])
 
-  name            String
-  slug            String        @unique
-  description     String?
-  imagePath       String?
-  bannerPath      String?
+  name        String
+  slug        String  @unique
+  description String?
+  imagePath   String? @map("image_path")
+  bannerPath  String? @map("banner_path")
 
-  isActive        Boolean       @default(true)
-  sortOrder       Int           @default(0)
+  isActive  Boolean @default(true) @map("is_active")
+  sortOrder Int     @default(0) @map("sort_order")
 
-  products        Product[]
+  products Product[]
 
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  deletedAt       DateTime?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
 
   @@index([categoryTypeId])
   @@map("categories")
@@ -86,30 +114,31 @@ model Category {
 
 model Product {
   id               BigInt                 @id @default(autoincrement())
-  categoryId       BigInt
-  brandId          BigInt?
+  categoryId       BigInt                 @map("category_id")
+  brandId          BigInt?                @map("brand_id")
   category         Category               @relation(fields: [categoryId], references: [id])
   brand            Brand?                 @relation(fields: [brandId], references: [id])
   name             String
   slug             String                 @unique
-  shortDescription String?
+  shortDescription String?                @map("short_description")
   description      String?
-  basePrice        Decimal                @db.Decimal(10, 2)
-  compareAtPrice   Decimal?               @db.Decimal(10, 2)
-  warrantyYears    Int                    @default(10)
-  trialDays        Int                    @default(100)
-  isFeatured       Boolean                @default(false)
-  isBestSeller     Boolean                @default(false)
-  isNewArrival     Boolean                @default(false)
-  isActive         Boolean                @default(true)
+  basePrice        Decimal                @map("base_price") @db.Decimal(10, 2)
+  compareAtPrice   Decimal?               @map("compare_at_price") @db.Decimal(10, 2)
+  warrantyYears    Int                    @default(10) @map("warranty_years")
+  trialDays        Int                    @default(100) @map("trial_days")
+  isFeatured       Boolean                @default(false) @map("is_featured")
+  isBestSeller     Boolean                @default(false) @map("is_best_seller")
+  isNewArrival     Boolean                @default(false) @map("is_new_arrival")
+  isActive         Boolean                @default(true) @map("is_active")
   variants         ProductVariant[]
   images           ProductImage[]
   specifications   ProductSpecification[]
   reviews          ProductReview[]
-  createdAt        DateTime               @default(now())
-  updatedAt        DateTime               @updatedAt
-  deletedAt        DateTime?
+  createdAt        DateTime               @default(now()) @map("created_at")
+  updatedAt        DateTime               @updatedAt @map("updated_at")
+  deletedAt        DateTime?              @map("deleted_at")
   orderItems       OrderItem[]
+  cartItems        CartItem[]
 
   @@index([categoryId])
   @@index([brandId])
@@ -117,87 +146,214 @@ model Product {
 }
 
 model ProductVariant {
-  id             BigInt   @id @default(autoincrement())
-  productId      BigInt
-  product        Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  sku            String   @unique
+  id             BigInt      @id @default(autoincrement())
+  productId      BigInt      @map("product_id")
+  product        Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sku            String      @unique
   size           String
   firmness       String?
-  lengthCm       Int?
-  widthCm        Int?
-  heightInch     Int?
-  price          Decimal  @db.Decimal(10, 2)
-  compareAtPrice Decimal? @db.Decimal(10, 2)
-  stock          Int      @default(0)
-  isDefault      Boolean  @default(false)
-  isActive       Boolean  @default(true)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  lengthCm       Int?        @map("length_cm")
+  widthCm        Int?        @map("width_cm")
+  heightInch     Int?        @map("height_inch")
+  price          Decimal     @db.Decimal(10, 2)
+  compareAtPrice Decimal?    @map("compare_at_price") @db.Decimal(10, 2)
+  stock          Int         @default(0)
+  isDefault      Boolean     @default(false) @map("is_default")
+  isActive       Boolean     @default(true) @map("is_active")
+  createdAt      DateTime    @default(now()) @map("created_at")
+  updatedAt      DateTime    @updatedAt @map("updated_at")
+  cartItems      CartItem[]
+  OrderItem      OrderItem[]
 
   @@map("product_variants")
 }
 
-model ProductImage {
-  id        BigInt  @id @default(autoincrement())
-  productId BigInt
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  imagePath String
-  altText   String?
-  sortOrder Int     @default(0)
+model Fabric {
+  id BigInt @id @default(autoincrement())
 
+  categoryTypeId BigInt       @map("category_type_id")
+  categoryType   CategoryType @relation(fields: [categoryTypeId], references: [id])
+
+  name String
+  slug String @unique
+
+  thumbnailPath String @map("thumbnail_path")
+
+  description String?
+
+  sortOrder Int @default(0) @map("sort_order")
+
+  isActive Boolean @default(true) @map("is_active")
+
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  productImages ProductImage[]
+  OrderItem     OrderItem[]
+
+  @@index([categoryTypeId])
+  @@map("fabrics")
+}
+
+model ProductImage {
+  id BigInt @id @default(autoincrement())
+
+  productId BigInt  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  fabricId BigInt? @map("fabric_id")
+  fabric   Fabric? @relation(fields: [fabricId], references: [id])
+
+  imagePath String @map("image_path")
+
+  altText String? @map("alt_text")
+
+  imageType ProductImageType @default(GALLERY) @map("image_type")
+
+  sortOrder Int @default(0) @map("sort_order")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([productId])
+  @@index([fabricId])
   @@map("product_images")
 }
 
 model ProductSpecification {
   id        BigInt  @id @default(autoincrement())
-  productId BigInt
+  productId BigInt  @map("product_id")
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   key       String
   value     String
-  sortOrder Int     @default(0)
+  sortOrder Int     @default(0) @map("sort_order")
 
   @@map("product_specifications")
 }
 
 model ProductReview {
   id           BigInt   @id @default(autoincrement())
-  productId    BigInt
+  productId    BigInt   @map("product_id")
   product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  customerName String
+  customerName String   @map("customer_name")
   rating       Int
   review       String
-  isApproved   Boolean  @default(false)
-  createdAt    DateTime @default(now())
+  isApproved   Boolean  @default(false) @map("is_approved")
+  createdAt    DateTime @default(now()) @map("created_at")
 
   @@map("product_reviews")
 }
 
 model Order {
-  id            BigInt        @id @default(autoincrement())
-  orderNumber   String        @unique
-  customerName  String
-  customerEmail String
-  subtotal      Decimal       @db.Decimal(10, 2)
-  grandTotal    Decimal       @db.Decimal(10, 2)
-  status        OrderStatus   @default(PENDING)
-  paymentStatus PaymentStatus @default(PENDING)
+  id            BigInt          @id @default(autoincrement())
+  orderNumber   String          @unique @map("order_number")
+  customerName  String          @map("customer_name")
+  customerEmail String          @map("customer_email")
+  subtotal      Decimal         @db.Decimal(10, 2)
+  grandTotal    Decimal         @map("grand_total") @db.Decimal(10, 2)
+  status        OrderStatus     @default(PENDING)
+  paymentStatus PaymentStatus   @default(PENDING) @map("payment_status")
   items         OrderItem[]
-  createdAt     DateTime      @default(now())
+  returns       ReturnRequest[]
+  createdAt     DateTime        @default(now()) @map("created_at")
 
   @@map("orders")
 }
 
 model OrderItem {
-  id        BigInt  @id @default(autoincrement())
-  orderId   BigInt
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  id BigInt @id @default(autoincrement())
+
+  orderId BigInt
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
   productId BigInt
   product   Product @relation(fields: [productId], references: [id])
-  quantity  Int
-  unitPrice Decimal @db.Decimal(10, 2)
-  total     Decimal @db.Decimal(10, 2)
+
+  variantId BigInt?
+  variant   ProductVariant? @relation(fields: [variantId], references: [id])
+
+  fabricId BigInt?
+  fabric   Fabric? @relation(fields: [fabricId], references: [id])
+
+  productName String
+
+  variantName String?
+
+  fabricName String?
+
+  sku String?
+
+  quantity     Int
+  productImage String?
+  unitPrice    Decimal @db.Decimal(10, 2)
+
+  total Decimal @db.Decimal(10, 2)
+
+  createdAt DateTime @default(now())
+
+  returnItems ReturnItem[]
 
   @@map("order_items")
+}
+
+model ReturnRequest {
+  id BigInt @id @default(autoincrement())
+
+  orderId BigInt @map("order_id")
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  requestNumber String @unique @map("request_number")
+
+  reason String?
+
+  status ReturnStatus @default(PENDING)
+
+  refundAmount Decimal? @map("refund_amount") @db.Decimal(10, 2)
+
+  customerRemarks String? @map("customer_remarks")
+
+  adminRemarks String? @map("admin_remarks")
+
+  requestedAt DateTime @default(now()) @map("requested_at")
+
+  approvedAt DateTime? @map("approved_at")
+
+  completedAt DateTime? @map("completed_at")
+
+  items ReturnItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([orderId])
+  @@map("return_requests")
+}
+
+model ReturnItem {
+  id BigInt @id @default(autoincrement())
+
+  returnRequestId BigInt        @map("return_request_id")
+  returnRequest   ReturnRequest @relation(fields: [returnRequestId], references: [id], onDelete: Cascade)
+
+  orderItemId BigInt    @map("order_item_id")
+  orderItem   OrderItem @relation(fields: [orderItemId], references: [id])
+
+  quantity Int
+
+  reason String?
+
+  condition ReturnCondition?
+
+  images Json?
+
+  refundAmount Decimal? @map("refund_amount") @db.Decimal(10, 2)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([returnRequestId])
+  @@index([orderItemId])
+  @@map("return_items")
 }
 
 model Blog {
@@ -206,10 +362,10 @@ model Blog {
   slug        String    @unique
   excerpt     String?
   content     String
-  coverImage  String?
-  isPublished Boolean   @default(false)
-  publishedAt DateTime?
-  createdAt   DateTime  @default(now())
+  coverImage  String?   @map("cover_image")
+  isPublished Boolean   @default(false) @map("is_published")
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
 
   @@map("blogs")
 }
@@ -219,8 +375,8 @@ model FAQ {
   question  String
   answer    String
   category  String?
-  sortOrder Int     @default(0)
-  isActive  Boolean @default(true)
+  sortOrder Int     @default(0) @map("sort_order")
+  isActive  Boolean @default(true) @map("is_active")
 
   @@map("faqs")
 }
@@ -231,7 +387,7 @@ model Testimonial {
   role      String?
   quote     String
   rating    Int     @default(5)
-  imagePath String?
+  imagePath String? @map("image_path")
 
   @@map("testimonials")
 }
@@ -243,8 +399,8 @@ model ContactEnquiry {
   phone     String?
   subject   String?
   message   String
-  isRead    Boolean  @default(false)
-  createdAt DateTime @default(now())
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@map("contact_enquiries")
 }
@@ -252,29 +408,69 @@ model ContactEnquiry {
 model NewsletterSubscriber {
   id             BigInt    @id @default(autoincrement())
   email          String    @unique
-  isSubscribed   Boolean   @default(true)
-  createdAt      DateTime  @default(now())
-  unsubscribedAt DateTime?
+  isSubscribed   Boolean   @default(true) @map("is_subscribed")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  unsubscribedAt DateTime? @map("unsubscribed_at")
 
   @@map("newsletter_subscribers")
 }
 
 model CategoryType {
-  id          BigInt     @id @default(autoincrement())
+  id          BigInt   @id @default(autoincrement())
   name        String
-  slug        String     @unique
+  slug        String   @unique
   description String?
-  iconPath    String?
-  sortOrder   Int        @default(0)
-  isActive    Boolean    @default(true)
+  iconPath    String?  @map("icon_path")
+  sortOrder   Int      @default(0) @map("sort_order")
+  isActive    Boolean  @default(true) @map("is_active")
+  fabrics     Fabric[]
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
-  categories  Category[]
+  categories Category[]
 
   @@map("category_types")
 }
+
+model Cart {
+  id BigInt @id @default(autoincrement())
+
+  userId    BigInt? @unique @map("user_id")
+  sessionId String? @unique @map("session_id")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items CartItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("carts")
+}
+
+model CartItem {
+  id BigInt @id @default(autoincrement())
+
+  cartId BigInt @map("cart_id")
+  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  productId BigInt  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+
+  variantId BigInt?         @map("variant_id")
+  variant   ProductVariant? @relation(fields: [variantId], references: [id])
+
+  quantity Int @default(1)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([cartId])
+  @@index([productId])
+  @@index([variantId])
+  @@map("cart_items")
+}
+
 // TODO (next version):
 // Customer, CustomerAddress, Cart, CartItem,
 // Wishlist, WishlistItem, Coupon, CouponUsage,

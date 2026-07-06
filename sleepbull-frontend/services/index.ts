@@ -30,12 +30,28 @@
  * - CRUD /api/categories, /api/products, /api/orders, /api/blogs, /api/faqs, /api/testimonials
  */
 
-export { getCategories, getCategoryById, getCategoryBySlug } from "./category.service";
-export { getFeaturedProducts, getAllMattresses, getProductsByCategory, getProduct, getRelatedProducts, searchProducts } from "./product.service";
+export { getCategories, getCategoriesByCollection, getCategoryById, getCategoryBySlug } from "./category.service";
+export {
+  getFeaturedProducts,
+  getFeaturedPillows,
+  getAllMattresses,
+  getAllPillows,
+  getProductsByCategory,
+  getProduct,
+  getRelatedProducts,
+  searchProducts,
+} from "./product.service";
 export { getBlogs, getBlog } from "./blog.service";
 export { getFaqs } from "./faq.service";
 export { getTestimonials } from "./testimonial.service";
 export { getApiMeta } from "./meta.service";
 export { submitContact, subscribeNewsletter, unsubscribeNewsletter } from "./public.service";
-export { login, logout, getProfile, getProfileClient, changePassword } from "./auth.service";
+export {
+  login,
+  googleLogin,
+  logout,
+  getProfile,
+  getProfileClient,
+  changePassword,
+} from "./auth.service";
 export { checkApiHealth } from "./health.service";

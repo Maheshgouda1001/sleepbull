@@ -14,6 +14,9 @@ export class OrderController {
   create = async (req: Request, res: Response) =>
     sendSuccess(res, 'Order created successfully', await this.service.create(req.body), 201);
 
+  checkout = async (req: Request, res: Response) =>
+    sendSuccess(res, 'Cash on delivery order placed successfully', await this.service.checkout(req.body), 201);
+
   update = async (req: Request, res: Response) =>
     sendSuccess(
       res,

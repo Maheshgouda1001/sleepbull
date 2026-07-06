@@ -16,37 +16,54 @@ export interface NavigationItem {
       href: "/categories/mattresses",
       children: [
         {
-          title: "Comfort Mattress",
-          href: "/categories/comfort-mattresses",
-          description: "Balanced comfort for everyday sleep",
-        },
-        {
           title: "Latex Mattress",
-          href: "/categories/latex",
+          href: "/categories/latex-mattress",
           description: "Natural breathable sleep",
         },
         {
           title: "Orthopedic Mattress",
-          href: "/categories/orthopedic-mattresses",
+          href: "/categories/orthopedic-mattress",
           description: "Back support for healthy sleep",
         },
         {
-          title: "Pocket Spring Mattress",
-          href: "/categories/pocket-spring",
+          title: "Spring Mattress",
+          href: "/categories/spring-mattress",
           description: "Luxury hotel comfort",
+        },
+        {
+          title: "HR Foam Mattress",
+          href: "/categories/hr-foam-mattress",
+          description: "Responsive high-resilience foam",
+        },
+      ],
+    },
+
+    {
+      title: "Pillows",
+      href: "/categories/pillows",
+      children: [
+        {
+          title: "Latex Pillow",
+          href: "/categories/latex-pillow",
+          description: "Natural latex neck support",
+        },
+        {
+          title: "Memory Pillow",
+          href: "/categories/memory-pillow",
+          description: "Adaptive pressure relief",
+        },
+        {
+          title: "Fiber Pillow",
+          href: "/categories/fiber-pillow",
+          description: "Soft everyday comfort",
         },
       ],
     },
   
-    {
-      title: "Pillows",
-      href: "/categories/pillows",
-    },
-  
-    {
-      title: "Bed Frames",
-      href: "/categories/bed-frames",
-    },
+    // {
+    //   title: "Bed Frames",
+    //   href: "/categories/bed-frames",
+    // },
   
     // {
     //   title: "Accessories",

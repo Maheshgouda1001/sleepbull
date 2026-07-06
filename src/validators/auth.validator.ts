@@ -5,6 +5,10 @@ export const loginSchema = z.object({
   password: z.string().min(8)
 });
 
+export const googleLoginSchema = z.object({
+  credential: z.string().min(20)
+});
+
 export const changePasswordSchema = z.object({
   currentPassword: z.string().min(8),
   newPassword: z.string().min(8)

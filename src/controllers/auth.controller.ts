@@ -13,6 +13,12 @@ export class AuthController {
     return sendSuccess(res, 'Login successful', result.user);
   };
 
+  googleLogin = async (req: Request, res: Response) => {
+    const result = await this.authService.googleLogin(req.body.credential);
+    res.cookie(env.COOKIE_NAME, result.token, authCookieOptions);
+    return sendSuccess(res, 'Google login successful', result.user);
+  };
+
   logout = async (_req: Request, res: Response) => {
     res.clearCookie(env.COOKIE_NAME, authCookieOptions);
     return sendSuccess(res, 'Logout successful', {});

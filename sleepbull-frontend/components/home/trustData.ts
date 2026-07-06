@@ -13,7 +13,7 @@ import {
       icon: Truck,
     },
     {
-      title: "100 Nights Trial",
+      title: "15 Days return policy",
       description:
         "Sleep on it risk-free before making your decision.",
       icon: RotateCcw,

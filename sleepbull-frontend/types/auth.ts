@@ -13,6 +13,10 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface GoogleLoginPayload {
+  credential: string;
+}
+
 export interface ChangePasswordPayload {
   currentPassword: string;
   newPassword: string;

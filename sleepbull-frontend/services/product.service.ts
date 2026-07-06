@@ -1,12 +1,13 @@
 import { fetcher, safeFetcher } from "@/lib/fetcher";
 import { ENDPOINTS } from "@/lib/endpoints";
-import { mapProduct } from "@/lib/mappers";
+import { isCategoryInCollection, mapProduct } from "@/lib/mappers";
 import type {
   ApiPaginatedProducts,
   ApiProduct,
 } from "@/lib/api-types";
 import type { Product } from "@/types/product";
-import { getCategoryBySlug } from "./category.service";
+import type { CollectionSlug } from "@/config/collections";
+import { getCategories, getCategoryBySlug } from "./category.service";
 
 interface ProductQuery {
   categoryId?: string;
@@ -36,26 +37,51 @@ async function getProducts(query: ProductQuery = {}): Promise<Product[]> {
     items: [],
     meta: { page: 1, limit: 10, total: 0, totalPages: 0 },
   });
-
   return response.items.map(mapProduct);
+}
+
+async function getProductsByCollection(
+  collection: CollectionSlug
+): Promise<Product[]> {
+  const [categories, products] = await Promise.all([
+    getCategories(),
+    getProducts({ isActive: true, limit: 50 }),
+  ]);
+  const categoryIds = new Set(
+    categories
+      .filter(
+        (category) =>
+          category.isActive && isCategoryInCollection(category, collection)
+      )
+      .map((category) => category.id)
+  );
+
+  return products.filter((product) => categoryIds.has(product.category.id));
 }
 
 /** GET /api/products?isFeatured via filter on list */
 export async function getFeaturedProducts(
   limit = 4
 ): Promise<Product[]> {
-  const products = await getProducts({
-    isActive: true,
-    limit: Math.max(limit, 12),
-  });
+  const products = await getProductsByCollection("mattresses");
 
   const featured = products.filter((product) => product.isFeatured);
   return (featured.length ? featured : products).slice(0, limit);
 }
 
-/** GET /api/products */
+export async function getFeaturedPillows(limit = 4): Promise<Product[]> {
+  const products = await getProductsByCollection("pillows");
+  return products.slice(0, limit);
+}
+
+/** GET /api/products — mattress collection */
 export async function getAllMattresses(): Promise<Product[]> {
-  return getProducts({ isActive: true, limit: 50 });
+  return getProductsByCollection("mattresses");
+}
+
+/** GET /api/products — pillow collection */
+export async function getAllPillows(): Promise<Product[]> {
+  return getProductsByCollection("pillows");
 }
 
 /** GET /api/products?categoryId=... */
@@ -64,6 +90,14 @@ export async function getProductsByCategory(
 ): Promise<Product[]> {
   if (slug === "mattresses") {
     return getAllMattresses();
+  }
+
+  if (slug === "pillows") {
+    return getAllPillows();
+  }
+
+  if (slug === "accessories") {
+    return getProductsByCollection("accessories");
   }
 
   const category = await getCategoryBySlug(slug);

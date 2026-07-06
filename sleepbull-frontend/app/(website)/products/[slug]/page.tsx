@@ -8,8 +8,7 @@ import {
   getRelatedProducts,
 } from "@/services/product.service";
 
-import ProductGallery from "@/components/products/ProductGallery";
-import ProductInfo from "@/components/products/ProductInfo";
+import ProductDetailClient from "@/components/products/ProductDetailClient";
 import ProductTabs from "@/components/products/ProductTabs";
 import RelatedProducts from "@/components/products/RelatedProducts";
 
@@ -59,17 +58,7 @@ export default async function ProductPage({
     <>
       <section className="py-16">
 
-        <div className="mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-2">
-
-          <ProductGallery
-            product={product}
-          />
-
-          <ProductInfo
-            product={product}
-          />
-
-        </div>
+        <ProductDetailClient product={product} />
 
       </section>
 

@@ -1,14 +1,41 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import Script from "next/script";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 import Button from "@/components/ui/Button";
 import {
   getProfileClient,
+  googleLogin,
   login,
   logout,
 } from "@/services/auth.service";
 import type { AuthUser } from "@/types/auth";
+
+declare global {
+  interface Window {
+    google?: {
+      accounts: {
+        id: {
+          initialize: (options: {
+            client_id: string;
+            callback: (response: { credential?: string }) => void;
+          }) => void;
+          renderButton: (
+            element: HTMLElement,
+            options: {
+              theme: "outline" | "filled_blue" | "filled_black";
+              size: "large" | "medium" | "small";
+              shape: "rectangular" | "pill" | "circle" | "square";
+              width?: number;
+              text?: "signin_with" | "signup_with" | "continue_with" | "signin";
+            }
+          ) => void;
+        };
+      };
+    };
+  }
+}
 
 export default function ProfilePanel() {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -16,6 +43,8 @@ export default function ProfilePanel() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const googleButtonRef = useRef<HTMLDivElement | null>(null);
+  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 
   useEffect(() => {
     getProfileClient().then((profile) => {
@@ -23,6 +52,49 @@ export default function ProfilePanel() {
       setLoading(false);
     });
   }, []);
+
+  function renderGoogleButton() {
+    if (!googleClientId || !window.google || !googleButtonRef.current || user) {
+      return;
+    }
+
+    googleButtonRef.current.innerHTML = "";
+    window.google.accounts.id.initialize({
+      client_id: googleClientId,
+      callback: async ({ credential }) => {
+        if (!credential) {
+          setError("Google did not return a sign-in credential.");
+          return;
+        }
+
+        setSubmitting(true);
+        setError("");
+        setMessage("");
+
+        try {
+          const profile = await googleLogin({ credential });
+          setUser(profile);
+          setMessage("Logged in with Google.");
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "Google login failed");
+        } finally {
+          setSubmitting(false);
+        }
+      },
+    });
+
+    window.google.accounts.id.renderButton(googleButtonRef.current, {
+      theme: "outline",
+      size: "large",
+      shape: "rectangular",
+      text: "continue_with",
+      width: 320,
+    });
+  }
+
+  useEffect(() => {
+    renderGoogleButton();
+  }, [googleClientId, user]);
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -95,9 +167,24 @@ export default function ProfilePanel() {
 
   return (
     <div className="mt-10 max-w-xl">
+      <Script
+        src="https://accounts.google.com/gsi/client"
+        strategy="afterInteractive"
+        onLoad={renderGoogleButton}
+      />
+
       <p className="text-slate-600">
         Sign in with your SleepBull admin account to manage the store.
       </p>
+
+      {googleClientId && (
+        <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p className="mb-4 text-sm font-semibold text-slate-700">
+            Continue faster with Google
+          </p>
+          <div ref={googleButtonRef} className={submitting ? "opacity-60" : ""} />
+        </div>
+      )}
 
       <form onSubmit={handleLogin} className="mt-8 space-y-5">
         <label className="block">

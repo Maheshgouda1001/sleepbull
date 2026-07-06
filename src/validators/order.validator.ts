@@ -14,7 +14,16 @@ const addressSchema = z.object({
 const orderItemSchema = z.object({
   productId: bigintIdSchema,
   variantId: bigintIdSchema.optional(),
+  fabricId: bigintIdSchema.optional(),
   quantity: z.number().int().positive()
+});
+
+export const checkoutBodySchema = z.object({
+  customerName: z.string().min(2),
+  customerEmail: z.string().email(),
+  customerPhone: z.string().min(7).optional(),
+  shippingAddress: addressSchema,
+  items: z.array(orderItemSchema).min(1)
 });
 
 export const orderBodySchema = z.object({

@@ -1,8 +1,9 @@
 import { fetcher, safeFetcher } from "@/lib/fetcher";
 import { ENDPOINTS } from "@/lib/endpoints";
-import { mapCategory } from "@/lib/mappers";
+import { isCategoryInCollection, mapCategory } from "@/lib/mappers";
 import type { ApiCategory } from "@/lib/api-types";
 import type { Category } from "@/types/category";
+import type { CollectionSlug } from "@/config/collections";
 
 /** GET /api/categories */
 export async function getCategories(): Promise<Category[]> {
@@ -11,6 +12,17 @@ export async function getCategories(): Promise<Category[]> {
     []
   );
   return categories.map(mapCategory);
+}
+
+export async function getCategoriesByCollection(
+  collection: CollectionSlug
+): Promise<Category[]> {
+  const categories = await getCategories();
+  return categories
+    .filter(
+      (category) => category.isActive && isCategoryInCollection(category, collection)
+    )
+    .sort((left, right) => left.sortOrder - right.sortOrder);
 }
 
 /** GET /api/categories/:id */

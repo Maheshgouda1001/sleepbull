@@ -76,7 +76,8 @@ async function main() {
       name: 'Sleepbull Spine Care',
       slug: 'sleepbull-spine-care',
       shortDescription: 'Firm orthopedic support for restorative sleep.',
-      description: 'Designed for pressure relief and consistent spinal support throughout the night.',
+      description:
+        'Designed for pressure relief and consistent spinal support throughout the night.',
       basePrice: 39999,
       isFeatured: true,
       variants: {
@@ -112,7 +113,8 @@ async function main() {
     },
     {
       question: 'Can I switch image storage to S3 later?',
-      answer: 'Yes. Uploads go through the StorageService interface, so only the implementation changes.',
+      answer:
+        'Yes. Uploads go through the StorageService interface, so only the implementation changes.',
       category: 'Technology',
       sortOrder: 2
     }

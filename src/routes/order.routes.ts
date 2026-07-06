@@ -6,10 +6,21 @@ import { authorize } from '../middleware/authorize';
 import { validate } from '../middleware/validate';
 import { asyncHandler } from '../utils/async-handler';
 import { idParamSchema } from '../validators/common.validator';
-import { orderBodySchema, orderQuerySchema, orderUpdateSchema } from '../validators/order.validator';
+import {
+  checkoutBodySchema,
+  orderBodySchema,
+  orderQuerySchema,
+  orderUpdateSchema
+} from '../validators/order.validator';
 
 export function createOrderRouter(controller: OrderController) {
   const router = Router();
+
+  router.post(
+    '/checkout',
+    validate({ body: checkoutBodySchema }),
+    asyncHandler(controller.checkout)
+  );
 
   router.get(
     '/',

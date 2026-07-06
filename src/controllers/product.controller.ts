@@ -58,7 +58,15 @@ export class ProductController {
     sendSuccess(
       res,
       'Product image uploaded successfully',
-      await this.imageService.upload(String(req.params.productId), req.file, req.body.altText),
+      await this.imageService.upload(String(req.params.productId), req.file, {
+        altText: typeof req.body.altText === 'string' ? req.body.altText : undefined,
+        imageType: typeof req.body.imageType === 'string' ? req.body.imageType : undefined,
+        fabricId: typeof req.body.fabricId === 'string' ? req.body.fabricId : undefined,
+        sortOrder:
+          typeof req.body.sortOrder === 'string' || typeof req.body.sortOrder === 'number'
+            ? Number(req.body.sortOrder)
+            : undefined
+      }),
       201
     );
 

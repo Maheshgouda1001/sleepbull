@@ -19,6 +19,7 @@ import { CategoryRepository } from './repositories/category.repository';
 import { ProductRepository } from './repositories/product.repository';
 import { ProductVariantRepository } from './repositories/product-variant.repository';
 import { ProductImageRepository } from './repositories/product-image.repository';
+import { FabricRepository } from './repositories/fabric.repository';
 import { OrderRepository } from './repositories/order.repository';
 import { BlogRepository } from './repositories/blog.repository';
 import { FaqRepository } from './repositories/faq.repository';
@@ -29,6 +30,7 @@ import { AuthService } from './services/auth.service';
 import { CategoryService } from './services/category.service';
 import { ProductService } from './services/product.service';
 import { ProductImageService } from './services/product-image.service';
+import { FabricService } from './services/fabric.service';
 import { OrderService } from './services/order.service';
 import { ContentService } from './services/content.service';
 import { ContactService } from './services/contact.service';
@@ -36,12 +38,14 @@ import { NewsletterService } from './services/newsletter.service';
 import { AuthController } from './controllers/auth.controller';
 import { CategoryController } from './controllers/category.controller';
 import { ProductController } from './controllers/product.controller';
+import { FabricController } from './controllers/fabric.controller';
 import { OrderController } from './controllers/order.controller';
 import { ContentController } from './controllers/content.controller';
 import { PublicController } from './controllers/public.controller';
 import { createAuthRouter } from './routes/auth.routes';
 import { createCategoryRouter } from './routes/category.routes';
 import { createProductRouter } from './routes/product.routes';
+import { createFabricRouter } from './routes/fabric.routes';
 import { createOrderRouter } from './routes/order.routes';
 import { createContentRouter } from './routes/content.routes';
 import { createPublicRouter } from './routes/public.routes';
@@ -56,6 +60,7 @@ const categoryRepository = new CategoryRepository();
 const productRepository = new ProductRepository();
 const productVariantRepository = new ProductVariantRepository();
 const productImageRepository = new ProductImageRepository();
+const fabricRepository = new FabricRepository();
 const orderRepository = new OrderRepository();
 const blogRepository = new BlogRepository();
 const faqRepository = new FaqRepository();
@@ -68,8 +73,10 @@ const categoryService = new CategoryService(categoryRepository);
 const productService = new ProductService(
   productRepository,
   productVariantRepository,
-  productImageRepository
+  productImageRepository,
+  fabricRepository
 );
+const fabricService = new FabricService(fabricRepository);
 const productImageService = new ProductImageService(
   productImageRepository,
   productRepository,
@@ -92,6 +99,7 @@ const newsletterService = new NewsletterService(newsletterRepository);
 
 const authController = new AuthController(authService);
 const categoryController = new CategoryController(categoryService);
+const fabricController = new FabricController(fabricService);
 const productController = new ProductController(productService, productImageService);
 const orderController = new OrderController(orderService);
 const blogController = new ContentController(blogService, 'Blogs');
@@ -145,6 +153,7 @@ app.use(
 
 app.use('/api/auth', createAuthRouter(authController));
 app.use('/api/categories', createCategoryRouter(categoryController));
+app.use('/api/fabrics', createFabricRouter(fabricController));
 app.use('/api/products', createProductRouter(productController));
 app.use('/api/orders', createOrderRouter(orderController));
 app.use('/api/blogs', createContentRouter(blogController, blogBodySchema));

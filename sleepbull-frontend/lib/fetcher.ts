@@ -28,6 +28,7 @@ export async function fetcher<T>(path: string): Promise<T> {
   const response = await fetch(url, {
     method: "GET",
     cache: "no-store",
+    credentials: "include",
     headers: {
       Accept: "application/json",
     },
