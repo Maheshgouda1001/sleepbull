@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const apiBase = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:4000";
+const apiBase = process.env.NEXT_PUBLIC_API_BASE ?? "https://api.sleepbull.com";
 
 const nextConfig: NextConfig = {
   images: {

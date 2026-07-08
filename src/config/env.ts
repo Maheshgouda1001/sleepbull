@@ -14,7 +14,7 @@ const booleanString = z.preprocess((value) => {
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(4000),
-  API_BASE_URL: z.string().url().default('http://localhost:4000'),
+  API_BASE_URL: z.string().url().default('https://api.sleepbull.com'),
   DATABASE_URL: z.string().min(1),
   JWT_ACCESS_SECRET: z.string().min(16),
   JWT_EXPIRES_IN: z.string().default('1d'),
