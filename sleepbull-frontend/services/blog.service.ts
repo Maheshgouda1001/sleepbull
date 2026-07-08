@@ -45,7 +45,7 @@ export async function getBlog(slug: string): Promise<Blog | null> {
 }
 
 export async function getBlogListPaginated(limit = 12) {
-  return safeFetcher(`${ENDPOINTS.BLOGS}?limit=${limit}`, {
+  return safeFetcher(`${ENDPOINTS.BLOGS}?limit=${limit}`, {   
     items: [] as ApiBlog[],
     meta: { page: 1, limit, total: 0, totalPages: 0 },
   });

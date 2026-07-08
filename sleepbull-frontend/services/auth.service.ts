@@ -20,15 +20,9 @@ export async function googleLogin(
 export async function logout(): Promise<void> {
   await poster<Record<string, never>>(ENDPOINTS.LOGOUT, {});
 }
-
 export async function getProfile(): Promise<AuthUser | null> {
-  try {
-    return await fetcher<AuthUser>(ENDPOINTS.PROFILE);
-  } catch {
-    return null;
-  }
-}
-
+  return fetcher<AuthUser>(ENDPOINTS.PROFILE);
+}   
 export async function getProfileClient(): Promise<AuthUser | null> {
   return getProfile();
 }

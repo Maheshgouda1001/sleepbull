@@ -1,13 +1,29 @@
 export interface AuthUser {
   id: string;
-  name: string;
+
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+
   email: string;
-  role: string;
+  phone?: string;
+
+  profileImage?: string;
+
+  role: "CUSTOMER" | "ADMIN" | "EDITOR" | "SUPER_ADMIN";
+
+  authProvider: "EMAIL" | "GOOGLE";
+
+  googleId?: string;
+
+  isEmailVerified: boolean;
+  isPhoneVerified: boolean;
+
   isActive: boolean;
+
   createdAt: string;
   updatedAt: string;
 }
-
 export interface LoginPayload {
   email: string;
   password: string;

@@ -11,11 +11,31 @@ export class ApiError extends Error {
   }
 }
 
-async function parseResponse<T>(response: Response): Promise<T> {
-  const payload = (await response.json()) as ApiResponse<T>;
+export async function parseResponse<T>(response: Response): Promise<T> {
+  const text = await response.text();
+
+  let payload: ApiResponse<T> = {
+    success: response.ok,
+    message: "",
+    data: null as T,
+  };
+
+  if (text) {
+    try {
+      payload = JSON.parse(text);
+    } catch {
+      throw new ApiError(
+        "Invalid server response.",
+        response.status
+      );
+    }
+  }
 
   if (!response.ok || payload.success === false) {
-    throw new ApiError(payload.message ?? "Request failed", response.status);
+    throw new ApiError(
+      payload.message || "Request failed",
+      response.status
+    );
   }
 
   return payload.data;
@@ -33,7 +53,6 @@ export async function fetcher<T>(path: string): Promise<T> {
       Accept: "application/json",
     },
   });
-
   return parseResponse<T>(response);
 }
 
