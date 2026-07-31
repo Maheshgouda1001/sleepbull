@@ -1,4 +1,5 @@
 import createHttpError from 'http-errors';
+import type { Prisma, ReturnCondition } from '@prisma/client';
 import { OrderRepository } from '../repositories/order.repository';
 import { ProductRepository } from '../repositories/product.repository';
 import { ProductVariantRepository } from '../repositories/product-variant.repository';
@@ -218,8 +219,8 @@ export class OrderService {
       orderItemId: string;
       quantity: number;
       reason?: string;
-      condition?: string;
-      images?: unknown;
+      condition?: ReturnCondition;
+      images?: Prisma.InputJsonValue;
     }>;
 
     const items = requestedItems.map((item) => {
@@ -237,7 +238,11 @@ export class OrderService {
       const unitPrice = Number(orderItem.unitPrice);
 
       return {
-        orderItemId,
+        orderItem: {
+          connect: {
+            id: orderItemId
+          }
+        },
         quantity: item.quantity,
         reason: item.reason,
         condition: item.condition,

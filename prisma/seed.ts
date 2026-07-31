@@ -11,19 +11,36 @@ async function main() {
     update: {},
     create: {
       email: 'admin@sleepbull.com',
-      name: 'Sleepbull Admin',
+      firstName: 'Sleepbull',
+      lastName: 'Admin',
       passwordHash,
       role: UserRole.SUPER_ADMIN
     }
   });
-
+  const mattressType = await prisma.categoryType.upsert({
+    where: {
+      slug: 'mattress'
+    },
+    update: {},
+    create: {
+      name: 'Mattress',
+      slug: 'mattress',
+      description: 'Mattress Category',
+      sortOrder: 1
+    }
+  });
   const comfort = await prisma.category.upsert({
     where: { slug: 'comfort-mattresses' },
     update: {},
     create: {
+      categoryType: {
+        connect: {
+          id: mattressType.id
+        }
+      },
       name: 'Comfort Mattresses',
       slug: 'comfort-mattresses',
-      description: 'Balanced comfort mattresses for everyday sleep.',
+      description: 'Balanced comfort mattresses...',
       sortOrder: 1
     }
   });
@@ -32,6 +49,11 @@ async function main() {
     where: { slug: 'orthopedic-mattresses' },
     update: {},
     create: {
+      categoryType: {
+        connect: {
+          id: mattressType.id
+        }
+      },
       name: 'Orthopedic Mattresses',
       slug: 'orthopedic-mattresses',
       description: 'Support-first mattresses engineered for spinal alignment.',
@@ -89,7 +111,7 @@ async function main() {
   const existingImage = await prisma.productImage.findFirst({
     where: {
       productId: product.id,
-      path: '/uploads/seed/cloud-hybrid-hero.svg'
+      imagePath: '/uploads/seed/cloud-hybrid-hero.svg'
     }
   });
 
@@ -97,7 +119,7 @@ async function main() {
     await prisma.productImage.create({
       data: {
         productId: product.id,
-        path: '/uploads/seed/cloud-hybrid-hero.svg',
+        imagePath: '/uploads/seed/cloud-hybrid-hero.svg',
         altText: 'Sleepbull Cloud Hybrid mattress',
         sortOrder: 1
       }
